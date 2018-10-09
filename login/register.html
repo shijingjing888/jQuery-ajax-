@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			span img{
+				width:300px;
+			}
+		</style>
+	</head>
+	<body>
+		<form>
+			用户名：<input type="text" id="tel" placeholder="请输入手机号" /><br/>
+			密码：<input type="text" id="pass" /><br/>
+			邮箱：<input type="text" id="email" /><br/>
+			姓名：<input type="text" id="name"/><br/>
+			性别：<input type="text" id="sex"/><br/>
+			班级：<input type="text" id="clas"/><br/>
+			<input type="button" id="btn" value="注册" />
+			<span></span>
+		</form>
+		
+		<script src="jquery.js"></script>
+		<script>
+			$("#btn").click(function(){
+				$.ajax({
+					url:"http://www.liyangyf.com/ctrl/register.php",
+					data:{
+						tel:$("#tel").val(),
+						pass:$("#pass").val(),
+						email:$("#email").val(),
+						name:$("#name").val(),
+						sex:$("#sex").val(),
+						clas:$("clas").val(),
+					},
+					beforeSend:function(){
+						$("span").html("<img src='images/timg.gif'>");
+					},
+					success:function(res){
+						switch(res){
+							case '0':
+								$("span").text("已被注册");
+								break;
+							case '1':
+								$("span").html("<em>注册成功</em>3秒后跳转<br/><img src='images/timg.gif'>");
+								setInterval(function(){
+									location.href="login.html";
+								},3000);
+								break;
+							case '2':
+								$("span").text("数据不全")
+								break;
+						}
+					}
+				});
+			})
+		</script>
+	</body>
+</html>
